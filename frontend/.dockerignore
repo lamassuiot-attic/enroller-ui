@@ -1,0 +1,8 @@
+.git
+node_modules
+public
+src
+.gitignore
+*.json
+README.md
+.gitignore
