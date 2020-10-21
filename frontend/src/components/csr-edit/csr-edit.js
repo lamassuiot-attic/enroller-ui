@@ -6,6 +6,7 @@ import { Grid, Button } from '@material-ui/core';
 import CSRModal from '../csr-modal';
 import AlertBar from '../alert-bar';
 import { downloadCSR } from '../../services/api/enroller';
+import { updateKeycloakToken } from '../../services/auth';
 import { useStyles } from './csr-edit-styles';
 
 export default function CSREdit(props) {
@@ -21,30 +22,32 @@ export default function CSREdit(props) {
   }
 
   const handleDownloadChange = () => {
-    downloadCSR(props.csr)
-    .then(
-      (response) => {
-        if (response.ok) {
-          response.blob().then(
-            (blob) => {
-              setError(null);
-              const url = window.URL.createObjectURL(new Blob([blob]));
-              const link = document.createElement("a");
-              link.href = url;
-              link.setAttribute('download', `csr-${props.csr.id}.csr` );
-              document.body.appendChild(link);
-              link.click();
-              link.parentNode.removeChild(link);
-            }
-          )
-        }else{
-          response.text().then(
-            (text) => {
-              setError(text);
-            }
-          )
-        }
+    updateKeycloakToken().success(() =>
+      downloadCSR(props.csr)
+        .then(
+        (response) => {
+          if (response.ok) {
+            response.blob().then(
+              (blob) => {
+                setError(null);
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute('download', `csr-${props.csr.id}.csr` );
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+              }
+            )
+          }else{
+            response.text().then(
+              (text) => {
+                setError(text);
+              }
+            )
+          }
       }).catch( error => setError(error.message))
+    )
   }
   
   const classes = useStyles();

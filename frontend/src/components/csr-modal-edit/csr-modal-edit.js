@@ -8,6 +8,7 @@ import { acceptCSR, denyCSR, removeCSR } from '../../services/api/enroller';
 import { useStyles } from './csr-modal-edit-styles';
 
 import { downloadCRT } from '../../services/api/enroller';
+import { updateKeycloakToken } from '../../services/auth';
 
 export default function CSRModalEdit(props) {
 
@@ -26,7 +27,8 @@ export default function CSRModalEdit(props) {
   }
 
   const handleDownloadCert = () => {
-    downloadCRT(props.csr)
+    updateKeycloakToken().success(() => {
+      downloadCRT(props.csr)
       .then(
         (response) => {
           if (response.ok) {
@@ -50,6 +52,7 @@ export default function CSRModalEdit(props) {
             )
           }
         }).catch( error => setError(error.message))
+    })
   }
 
   const classes = useStyles();
