@@ -30,6 +30,18 @@ export function denyCSR(csr) {
   });
 }
 
+export function revokeCSR(csr) {
+  const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id
+  csr.status = "REVOKED"
+  return fetch(fetchUrl, {
+    method: "PUT",
+    body: JSON.stringify(csr),
+    headers: {
+      "Authorization": "Bearer " + getKeycloakToken()
+    }
+  });
+}
+
 export function removeCSR(csr){
   const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id;
   return fetch(fetchUrl, {

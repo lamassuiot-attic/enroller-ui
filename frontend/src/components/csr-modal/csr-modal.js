@@ -20,10 +20,15 @@ export default function CSRModal(props) {
       operation(props.csr).then(
         (response) => {
           if (response.ok) {
-              props.onCSRUpdate();
-              setCSR(props.csr);
-              props.setOpCorrect("Operation successful");
-              props.setOpError(null);
+            response.json().then(
+              (data) => {
+                console.log(data);
+                props.onCSRUpdate();
+                setCSR(data)
+                props.setOpCorrect("Operation successful");
+                props.setOpError(null);
+              }
+            )
           }else{
             response.text().then(
               (text) => {

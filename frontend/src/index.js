@@ -11,6 +11,7 @@ import { initKeycloak } from './services/auth';
 import CertsTable from './routes/certs';
 import CSRsList from './routes';
 import NewCSR from './routes/new';
+import CAsList from './routes/ca-list';
 import ScrollToTop from './utils/scroll-to-top';
 import LamassuAppBar from './components/app-bar';
 
@@ -30,6 +31,7 @@ initKeycloak().success( (auth) => {
         <Switch>
             <Route exact path="/" render={(props) => (<CSRsList key={uuid()}{...props}/>)}/>
             <Route exact path="/new" render={(props) => (<NewCSR key={uuid()}{...props}/>)}/>
+            <Route exact path="/cas" render={(props) => (<CAsList key={uuid()}{...props}/>)}/>
             <PrivateRoute component={CertsTable} path="/certs" roles={["admin"]}/>
         </Switch>
       </HashRouter>

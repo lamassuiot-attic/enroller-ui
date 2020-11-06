@@ -11,6 +11,8 @@ const headCells = [
     {id: 'expirationDate', numeric: false, disablePadding: false, label: 'Expiration Date'},
     {id: 'revocationDate', numeric: false, disablePadding: false, label: 'Revocation Date'},
     {id: 'serial', numeric: false, disablePadding: false, label: 'Serial Number'},
+    {id: 'key', numeric:false, disablePadding: false, label: 'Key Algorithm'},
+    {id: 'keySize', numeric:true, disablePadding: false, label: 'Key Size'},
     {id: 'filename', numeric: false, disablePadding: false, label: 'Filename'}
 ]
 

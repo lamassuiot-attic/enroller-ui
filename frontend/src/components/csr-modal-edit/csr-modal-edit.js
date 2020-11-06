@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Grid, Button } from '@material-ui/core';
 import AlertBar from '../alert-bar';
 
-import { acceptCSR, denyCSR, removeCSR } from '../../services/api/enroller';
+import { acceptCSR, denyCSR, removeCSR, revokeCSR } from '../../services/api/enroller';
 import { useStyles } from './csr-modal-edit-styles';
 
 import { downloadCRT } from '../../services/api/enroller';
@@ -24,6 +24,10 @@ export default function CSRModalEdit(props) {
 
   const handleRemoveChange = () => {
     props.onCSRStatusChange(removeCSR);
+  }
+
+  const handleRevokeChange = () => {
+    props.onCSRStatusChange(revokeCSR);
   }
 
   const handleDownloadCert = () => {
@@ -66,9 +70,6 @@ export default function CSRModalEdit(props) {
         <Grid item xs={4}>
           <Button color="primary" variant="contained" onClick={handleDenyChange} className={classes.button}>Deny</Button>
         </Grid>
-        <Grid item xs={4}>
-          <Button color="secondary" variant="contained" onClick={handleRemoveChange} className={classes.button}>Remove</Button>
-        </Grid>
       </React.Fragment>
 
   const deniedOptions =
@@ -86,7 +87,7 @@ export default function CSRModalEdit(props) {
           <Button color="default" variant="contained" onClick={handleDownloadCert} className={classes.button}>Download Certificate</Button>
       </Grid>
       <Grid item xs={5}>
-          <Button color="secondary" variant="contained" onClick={handleRemoveChange} className={classes.button}>Remove</Button>
+          <Button color="secondary" variant="contained" onClick={handleRevokeChange} className={classes.button}>Revoke</Button>
       </Grid>
     </React.Fragment>
 
@@ -97,6 +98,8 @@ export default function CSRModalEdit(props) {
     case "APPROBED":
       return approbedOptions;
     case "DENIED":
+      return deniedOptions;
+    case "REVOKED":
       return deniedOptions;
     default:
       return newOptions;

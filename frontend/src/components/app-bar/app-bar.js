@@ -23,6 +23,7 @@ export default function LamassuAppBar() {
             <Avatar variant="square" alt="Lamassu Logo" src="lamassu_logo.png"></Avatar>
             <Typography variant="h6" noWrap className={classes.typoAppBarTitle}>Lamassu Enroller (RA)</Typography>
             <AuthorizedElement roles={["admin"]}><Button component={Link} to="/" replace variant="text">Home</Button></AuthorizedElement>
+            <Button component={Link} to="/cas" replace variant="text">CAs</Button>
             <Button component={Link} to="/new" replace variant="text">New</Button>
             <AuthorizedElement roles={["admin"]}><Button component={Link} to="/certs" replace variant="text">Certificates list</Button></AuthorizedElement>
             <Button variant="text" onClick={handleProfileChange}>Account</Button>

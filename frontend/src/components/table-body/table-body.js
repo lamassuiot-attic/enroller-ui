@@ -74,6 +74,8 @@ export default function CertsTableBody(props) {
                             <TableCell align="left">{expirationDate}</TableCell>
                             <TableCell align="left">{revocationDate}</TableCell>
                             <TableCell align="right">{crt.serial}</TableCell>
+                            <TableCell align="left">{crt.key}</TableCell>
+                            <TableCell align="right">{crt.keySize}</TableCell>
                             <TableCell align="left">{crt.crtpath}</TableCell>
                         </TableRow>
                     );
