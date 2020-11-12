@@ -31,7 +31,7 @@ initKeycloak().success( (auth) => {
         <Switch>
             <Route exact path="/" render={(props) => (<CSRsList key={uuid()}{...props}/>)}/>
             <Route exact path="/new" render={(props) => (<NewCSR key={uuid()}{...props}/>)}/>
-            <Route exact path="/cas" render={(props) => (<CAsList key={uuid()}{...props}/>)}/>
+            <PrivateRoute component={CAsList} path="/cas" roles={["admin"]}/>
             <PrivateRoute component={CertsTable} path="/certs" roles={["admin"]}/>
         </Switch>
       </HashRouter>

@@ -64,10 +64,10 @@ export default function CSRModalEdit(props) {
   const newOptions = 
       <React.Fragment>   
         { error !== null && <AlertBar setMessage={setError} message={error} type= "error"/>}   
-        <Grid item xs={4}>
+        <Grid item xs={7}>
           <Button color="default" variant="contained" onClick={handleAcceptChange} className={classes.button}>Accept</Button>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <Button color="primary" variant="contained" onClick={handleDenyChange} className={classes.button}>Deny</Button>
         </Grid>
       </React.Fragment>
