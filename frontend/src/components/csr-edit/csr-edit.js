@@ -23,7 +23,7 @@ export default function CSREdit(props) {
 
   const handleDownloadCSRChange = () => {
     updateKeycloakToken().success(() =>
-      downloadCRT(props.csr)
+      downloadCSR(props.csr)
         .then(
         (response) => {
           if (response.ok) {
@@ -52,7 +52,7 @@ export default function CSREdit(props) {
 
   const handleDownloadCRTChange = () => {
     updateKeycloakToken().success(() =>
-      downloadCSR(props.csr)
+      downloadCRT(props.csr)
         .then(
         (response) => {
           if (response.ok) {
@@ -62,7 +62,7 @@ export default function CSREdit(props) {
                 const url = window.URL.createObjectURL(new Blob([blob]));
                 const link = document.createElement("a");
                 link.href = url;
-                link.setAttribute('download', `csr-${props.csr.id}.csr` );
+                link.setAttribute('download', `crt-${props.csr.id}.crt` );
                 document.body.appendChild(link);
                 link.click();
                 link.parentNode.removeChild(link);
