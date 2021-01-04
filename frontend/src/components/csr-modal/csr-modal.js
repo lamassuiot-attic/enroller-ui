@@ -1,61 +1,68 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import {
+  Grid,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@material-ui/core';
 
 import CSRInfo from '../csr-info';
 import CSRModalEdit from '../csr-modal-edit';
-import { updateKeycloakToken } from '../../services/auth';
-
+import { updateKeycloakToken } from '../../services/auth/auth';
 
 export default function CSRModal(props) {
   const [csr, setCSR] = useState(props.csr);
 
   const handleChange = () => {
     props.onModalChange();
-  }
+  };
 
   const handleInputChange = (operation) => {
-    updateKeycloakToken().success(() => {
-      operation(props.csr).then(
-        (response) => {
-          if (response.ok) {
-            response.json().then(
-              (data) => {
+    updateKeycloakToken()
+      .then(() => {
+        operation(props.csr)
+          .then((response) => {
+            if (response.ok) {
+              response.json().then((data) => {
                 console.log(data);
                 props.onCSRUpdate();
-                setCSR(data)
-                props.setOpCorrect("Operation successful");
+                setCSR(data);
+                props.setOpCorrect('Operation successful');
                 props.setOpError(null);
-              }
-            )
-          }else{
-            response.text().then(
-              (text) => {
+              });
+            } else {
+              response.text().then((text) => {
                 setCSR(props.csr);
                 props.setOpError(text);
                 props.setOpCorrect(null);
-              }
-            )
-          }
-        }
-      ).catch(error => props.setOpError(error.message));
-      handleChange();
-    });
-  }
+              });
+            }
+          })
+          .catch((error) => props.setOpError(error.message));
+        handleChange();
+      })
+      .catch((error) => setError(error.message));
+  };
 
-  return(
+  return (
     <React.Fragment>
-      <Dialog onClose={handleChange} aria-labelledby="simple-dialog-title" open={props.open}>
+      <Dialog
+        onClose={handleChange}
+        aria-labelledby="simple-dialog-title"
+        open={props.open}
+      >
         <DialogTitle>CSR Details</DialogTitle>
         <DialogContent dividers>
-            <CSRInfo csr={csr} />
+          <CSRInfo csr={csr} />
         </DialogContent>
         <DialogActions>
           <Grid container spacing={2}>
-            <CSRModalEdit csr={csr} onCSRStatusChange={handleInputChange}/>
+            <CSRModalEdit csr={csr} onCSRStatusChange={handleInputChange} />
           </Grid>
-          </DialogActions>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );
@@ -67,5 +74,5 @@ CSRModal.propTypes = {
   onModalChange: PropTypes.func.isRequired,
   onCSRUpdate: PropTypes.func.isRequired,
   setOpError: PropTypes.func,
-  setOpCorrect: PropTypes.func
-}
+  setOpCorrect: PropTypes.func,
+};

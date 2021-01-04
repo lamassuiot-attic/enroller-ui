@@ -1,1 +1,1 @@
-export { default } from './certs-table'
+export { default } from './certs-table';

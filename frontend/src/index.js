@@ -19,23 +19,35 @@ import { PrivateRoute } from './services/auth';
 
 dotenv.config();
 
-initKeycloak().success( (auth) => {
-  if(!auth) {
+initKeycloak().success((auth) => {
+  if (!auth) {
     window.location.reload();
   } else {
-    render((
+    render(
       <HashRouter>
-        <CssBaseline/>
-        <LamassuAppBar/>
-        <ScrollToTop/>
+        <CssBaseline />
+        <LamassuAppBar />
+        <ScrollToTop />
         <Switch>
-            <Route exact path="/" render={(props) => (<CSRsList key={uuid()}{...props}/>)}/>
-            <Route exact path="/new" render={(props) => (<NewCSR key={uuid()}{...props}/>)}/>
-            <PrivateRoute component={CAsList} path="/cas" roles={["admin"]}/>
-            <PrivateRoute component={CertsTable} path="/certs" roles={["admin"]}/>
+          <Route
+            exact
+            path="/"
+            render={(props) => <CSRsList key={uuid()} {...props} />}
+          />
+          <Route
+            exact
+            path="/new"
+            render={(props) => <NewCSR key={uuid()} {...props} />}
+          />
+          <PrivateRoute component={CAsList} path="/cas" roles={['admin']} />
+          <PrivateRoute
+            component={CertsTable}
+            path="/certs"
+            roles={['admin']}
+          />
         </Switch>
-      </HashRouter>
-    ), document.getElementById('root'));
+      </HashRouter>,
+      document.getElementById('root')
+    );
   }
 });
-

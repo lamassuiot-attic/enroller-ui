@@ -1,95 +1,96 @@
-import { getKeycloakToken } from '../auth';
+import { getKeycloakToken } from '../auth/auth';
 
 const protocol = process.env.REACT_APP_ENROLLER_PROTOCOL;
 const host = process.env.REACT_APP_ENROLLER_HOST;
 const port = process.env.REACT_APP_ENROLLER_PORT;
 const path = process.env.REACT_APP_ENROLLER_PATH;
 
-
 export function acceptCSR(csr) {
-  const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id;
-  csr.status = "APPROBED"
+  const fetchUrl = protocol + '://' + host + ':' + port + path + '/' + csr.id;
+  csr.status = 'APPROBED';
   return fetch(fetchUrl, {
-    method: "PUT",
+    method: 'PUT',
     body: JSON.stringify(csr),
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken()
-    }
+      Authorization: 'Bearer ' + getKeycloakToken(),
+    },
   });
 }
 
 export function denyCSR(csr) {
-  const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id;
-  csr.status = "DENIED"
+  const fetchUrl = protocol + '://' + host + ':' + port + path + '/' + csr.id;
+  csr.status = 'DENIED';
   return fetch(fetchUrl, {
-    method: "PUT",
+    method: 'PUT',
     body: JSON.stringify(csr),
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken()
-    }
+      Authorization: 'Bearer ' + getKeycloakToken(),
+    },
   });
 }
 
 export function revokeCSR(csr) {
-  const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id
-  csr.status = "REVOKED"
+  const fetchUrl = protocol + '://' + host + ':' + port + path + '/' + csr.id;
+  csr.status = 'REVOKED';
   return fetch(fetchUrl, {
-    method: "PUT",
+    method: 'PUT',
     body: JSON.stringify(csr),
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken()
-    }
+      Authorization: 'Bearer ' + getKeycloakToken(),
+    },
   });
 }
 
-export function removeCSR(csr){
-  const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id;
+export function removeCSR(csr) {
+  const fetchUrl = protocol + '://' + host + ':' + port + path + '/' + csr.id;
   return fetch(fetchUrl, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken()
-    }
+      Authorization: 'Bearer ' + getKeycloakToken(),
+    },
   });
 }
 
 export function downloadCSR(csr) {
-  const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id + "/file";
+  const fetchUrl =
+    protocol + '://' + host + ':' + port + path + '/' + csr.id + '/file';
   return fetch(fetchUrl, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken()
-    }
+      Authorization: 'Bearer ' + getKeycloakToken(),
+    },
   });
 }
 
 export function getCSRs() {
-  const fetchUrl = protocol + "://" + host + ":" + port + path;
+  const fetchUrl = protocol + '://' + host + ':' + port + path;
   return fetch(fetchUrl, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken()
-    }
+      Authorization: 'Bearer ' + getKeycloakToken(),
+    },
   });
 }
 
 export function postCSR(data) {
-  const fetchUrl = protocol + "://" + host + ":" + port + path;
+  const fetchUrl = protocol + '://' + host + ':' + port + path;
   return fetch(fetchUrl, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken(),
-      "Content-Type": "application/pkcs10"
+      Authorization: 'Bearer ' + getKeycloakToken(),
+      'Content-Type': 'application/pkcs10',
     },
-    body: data
+    body: data,
   });
 }
 
 export function downloadCRT(csr) {
-  const fetchUrl = protocol + "://" + host + ":" + port + path + "/" + csr.id + "/crt";
+  const fetchUrl =
+    protocol + '://' + host + ':' + port + path + '/' + csr.id + '/crt';
   return fetch(fetchUrl, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Authorization": "Bearer " + getKeycloakToken()
-    }
+      Authorization: 'Bearer ' + getKeycloakToken(),
+    },
   });
 }

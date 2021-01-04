@@ -1,1 +1,1 @@
-export { default } from "./table-body";
+export { default } from './table-body';
