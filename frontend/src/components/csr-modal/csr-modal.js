@@ -21,30 +21,28 @@ export default function CSRModal(props) {
   };
 
   const handleInputChange = (operation) => {
-    updateKeycloakToken()
-      .then(() => {
-        operation(props.csr)
-          .then((response) => {
-            if (response.ok) {
-              response.json().then((data) => {
-                console.log(data);
-                props.onCSRUpdate();
-                setCSR(data);
-                props.setOpCorrect('Operation successful');
-                props.setOpError(null);
-              });
-            } else {
-              response.text().then((text) => {
-                setCSR(props.csr);
-                props.setOpError(text);
-                props.setOpCorrect(null);
-              });
-            }
-          })
-          .catch((error) => props.setOpError(error.message));
-        handleChange();
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      operation(props.csr)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((data) => {
+              console.log(data);
+              props.onCSRUpdate();
+              setCSR(data);
+              props.setOpCorrect('Operation successful');
+              props.setOpError(null);
+            });
+          } else {
+            response.text().then((text) => {
+              setCSR(props.csr);
+              props.setOpError(text);
+              props.setOpCorrect(null);
+            });
+          }
+        })
+        .catch((error) => props.setOpError(error.message));
+      handleChange();
+    });
   };
 
   return (

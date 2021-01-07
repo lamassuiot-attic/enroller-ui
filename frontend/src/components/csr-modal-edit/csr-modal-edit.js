@@ -35,30 +35,28 @@ export default function CSRModalEdit(props) {
   };
 
   const handleDownloadCert = () => {
-    updateKeycloakToken()
-      .then(() => {
-        downloadCRT(props.csr)
-          .then((response) => {
-            if (response.ok) {
-              response.blob().then((blob) => {
-                setError(null);
-                const url = window.URL.createObjectURL(new Blob([blob]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', `crt-${props.csr.id}.crt`);
-                document.body.appendChild(link);
-                link.click();
-                link.parentNode.removeChild(link);
-              });
-            } else {
-              response.text().then((text) => {
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      downloadCRT(props.csr)
+        .then((response) => {
+          if (response.ok) {
+            response.blob().then((blob) => {
+              setError(null);
+              const url = window.URL.createObjectURL(new Blob([blob]));
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', `crt-${props.csr.id}.crt`);
+              document.body.appendChild(link);
+              link.click();
+              link.parentNode.removeChild(link);
+            });
+          } else {
+            response.text().then((text) => {
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   const classes = useStyles();

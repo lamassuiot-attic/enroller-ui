@@ -21,25 +21,23 @@ export default function NewCSR() {
   };
 
   const handleValueSubmit = (event) => {
-    updateKeycloakToken()
-      .then(() => {
-        postCSR(CSRValue)
-          .then((response) => {
-            if (response.ok) {
+    updateKeycloakToken().success(() => {
+      postCSR(CSRValue)
+        .then((response) => {
+          if (response.ok) {
+            setCSRValue('');
+            setError(null);
+            setCorrect('CSR successfully submmited');
+          } else {
+            response.text().then((text) => {
               setCSRValue('');
-              setError(null);
-              setCorrect('CSR successfully submmited');
-            } else {
-              response.text().then((text) => {
-                setCSRValue('');
-                setError(text);
-                setCorrect(null);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+              setError(text);
+              setCorrect(null);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
     event.preventDefault();
   };
 

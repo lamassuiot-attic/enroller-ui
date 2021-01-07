@@ -60,7 +60,7 @@ describe('<CSRsList />', () => {
 
   beforeEach(() => {
     updateKeycloakToken.mockImplementation(() => {
-      return Promise.resolve();
+      return { success: (callback) => callback() };
     });
 
     getCSRs.mockImplementation(() => {
@@ -112,21 +112,6 @@ describe('<CSRsList />', () => {
         ok: false,
         text: () => Promise.resolve('error from API'),
       });
-    });
-
-    let wrapper;
-    await act(async () => {
-      wrapper = mount(<CSRsList />);
-    });
-    wrapper.update();
-
-    expect(wrapper.find(AlertBar)).toHaveLength(1);
-    expect(wrapper.find(AlertBar).prop('type')).toBe('error');
-  });
-
-  it('CSRsList redering unable to obtain Keycloak Token', async () => {
-    updateKeycloakToken.mockImplementation(() => {
-      return Promise.reject(new Error('unable to obtain Keycloak Token'));
     });
 
     let wrapper;

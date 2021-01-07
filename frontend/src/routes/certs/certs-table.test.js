@@ -49,7 +49,7 @@ describe('<CertsTable />', () => {
 
   beforeEach(() => {
     updateKeycloakToken.mockImplementation(() => {
-      return Promise.resolve();
+      return { success: (callback) => callback() };
     });
 
     getCRTs.mockImplementation(() => {

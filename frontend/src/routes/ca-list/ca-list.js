@@ -29,50 +29,46 @@ export default function CAsList() {
   const classes = useStyles();
 
   const getCAS = () => {
-    updateKeycloakToken()
-      .then(() => {
-        getCAs()
-          .then((response) => {
-            if (response.ok) {
-              response.json().then((result) => {
-                if (result.CAs !== undefined) {
-                  setCAs(result.CAs.CAs);
-                  setError(null);
-                }
-              });
-            } else {
-              response.text().then((text) => {
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      getCAs()
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((result) => {
+              if (result.CAs !== undefined) {
+                setCAs(result.CAs.CAs);
+                setError(null);
+              }
+            });
+          } else {
+            response.text().then((text) => {
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   const handleCAChange = (CA) => {
     setSelectedCA(CA);
-    updateKeycloakToken()
-      .then(() => {
-        getCAInfo(CA)
-          .then((response) => {
-            if (response.ok) {
-              response.json().then((result) => {
-                if (result.CAInfo !== undefined) {
-                  setCAInfo(result.CAInfo);
-                  setError(null);
-                }
-              });
-            } else {
-              response.text().then((text) => {
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      getCAInfo(CA)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((result) => {
+              if (result.CAInfo !== undefined) {
+                setCAInfo(result.CAInfo);
+                setError(null);
+              }
+            });
+          } else {
+            response.text().then((text) => {
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   const handleRegister = (CA) => {
@@ -80,24 +76,22 @@ export default function CAsList() {
   };
 
   const handleRevoke = (CA) => {
-    updateKeycloakToken()
-      .then(() => {
-        deleteCA(CA)
-          .then((response) => {
-            if (response.ok) {
-              setCorrect(selectedCA + ' successfully revoked');
-              getCAS();
-              setSelectedCA(null);
-              setCAInfo(null);
-            } else {
-              response.text().then((text) => {
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      deleteCA(CA)
+        .then((response) => {
+          if (response.ok) {
+            setCorrect(selectedCA + ' successfully revoked');
+            getCAS();
+            setSelectedCA(null);
+            setCAInfo(null);
+          } else {
+            response.text().then((text) => {
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   useEffect(() => {

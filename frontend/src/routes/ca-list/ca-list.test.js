@@ -56,7 +56,7 @@ describe('<CAsList />', () => {
 
   beforeEach(() => {
     updateKeycloakToken.mockImplementation(() => {
-      return Promise.resolve();
+      return { success: (callback) => callback() };
     });
 
     getCAs.mockImplementation(() => {

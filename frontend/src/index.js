@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 
 import { CssBaseline } from '@material-ui/core';
 
-import { initKeycloak } from './services/auth';
+import { initKeycloak } from './services/auth/auth';
 import CertsTable from './routes/certs';
 import CSRsList from './routes';
 import NewCSR from './routes/new';
@@ -15,7 +15,7 @@ import CAsList from './routes/ca-list';
 import ScrollToTop from './utils/scroll-to-top';
 import LamassuAppBar from './components/app-bar';
 
-import { PrivateRoute } from './services/auth';
+import { PrivateRoute } from './services/auth/auth';
 
 dotenv.config();
 

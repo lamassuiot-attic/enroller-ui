@@ -30,7 +30,7 @@ describe('<CSREdit />', () => {
 
   beforeEach(() => {
     updateKeycloakToken.mockImplementation(() => {
-      return Promise.resolve();
+      return { success: (callback) => callback() };
     });
 
     isAuthorized.mockImplementation(() => {

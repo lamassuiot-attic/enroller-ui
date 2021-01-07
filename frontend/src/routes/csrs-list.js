@@ -15,27 +15,25 @@ export default function CSRsList() {
   const [opCorrect, setOpCorrect] = useState(null);
 
   const getCSRS = () => {
-    updateKeycloakToken()
-      .then(() => {
-        getCSRs()
-          .then((response) => {
-            if (response.ok) {
-              response.json().then((result) => {
-                if (result._embedded !== undefined) {
-                  setIsLoaded(true);
-                  setCSRs(result._embedded.csr);
-                }
-              });
-            } else {
-              response.text().then((text) => {
-                setIsLoaded(false);
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      getCSRs()
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((result) => {
+              if (result._embedded !== undefined) {
+                setIsLoaded(true);
+                setCSRs(result._embedded.csr);
+              }
+            });
+          } else {
+            response.text().then((text) => {
+              setIsLoaded(false);
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   useEffect(() => {

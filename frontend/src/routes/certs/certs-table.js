@@ -34,54 +34,50 @@ export default function CertsTable() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getCRTS = () => {
-    updateKeycloakToken()
-      .then(() => {
-        getCRTs()
-          .then((response) => {
-            if (response.ok) {
-              response.json().then((result) => {
-                if (result.CRTs !== undefined) {
-                  setIsLoaded(true);
-                  setCRTs(result.CRTs.CRTs);
-                } else {
-                  setIsLoaded(false);
-                  setError('Database is empty');
-                }
-              });
-            } else {
-              response.text().then((text) => {
+    updateKeycloakToken().success(() => {
+      getCRTs()
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((result) => {
+              if (result.CRTs !== undefined) {
+                setIsLoaded(true);
+                setCRTs(result.CRTs.CRTs);
+              } else {
                 setIsLoaded(false);
-                setError(text);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+                setError('Database is empty');
+              }
+            });
+          } else {
+            response.text().then((text) => {
+              setIsLoaded(false);
+              setError(text);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   const revokeCRTS = (crt) => {
-    updateKeycloakToken()
-      .then(() => {
-        revokeCRT(crt)
-          .then((response) => {
-            if (response.ok) {
-              response.json().then((result) => {
-                getCRTS();
-                setRevokeError(null);
-                setCorrectRevoke('Certificate successfully revoked');
-              });
-            } else {
-              response.text().then((text) => {
-                getCRTS();
-                setRevokeError(text);
-                setCorrectRevoke(null);
-              });
-            }
-          })
-          .catch((error) => setError(error.message));
-      })
-      .catch((error) => setError(error.message));
+    updateKeycloakToken().success(() => {
+      revokeCRT(crt)
+        .then((response) => {
+          if (response.ok) {
+            response.json().then((result) => {
+              getCRTS();
+              setRevokeError(null);
+              setCorrectRevoke('Certificate successfully revoked');
+            });
+          } else {
+            response.text().then((text) => {
+              getCRTS();
+              setRevokeError(text);
+              setCorrectRevoke(null);
+            });
+          }
+        })
+        .catch((error) => setError(error.message));
+    });
   };
 
   useEffect(() => {
