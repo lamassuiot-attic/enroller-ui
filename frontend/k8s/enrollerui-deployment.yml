@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enrollerui
+  labels:
+    app: enrollerui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: enrollerui
+  template:
+    metadata:
+      labels:
+        app: enrollerui
+    spec:
+      containers:
+        - name: enrollerui
+          image: enrollerui:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 443
