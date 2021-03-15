@@ -6,3 +6,7 @@ src
 *.json
 README.md
 .gitignore
+test_csr
+*.png
+k8s
+provision-k8s.sh
