@@ -10,4 +10,4 @@ Lamassu
 
 ## Enroller UI
 
-Enroller UI is the main interface for managing the Lamassu PKI and the [Enroller](https://github.com/lamassuiot/enroller) component services.
+Enroller UI is the main user interface for managing the Lamassu PKI and the [Enroller](https://github.com/lamassuiot/enroller) component services.
